@@ -1,0 +1,1 @@
+export const SET_SIDE = 'SET_SIDE'
