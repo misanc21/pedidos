@@ -2,6 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import AuthContext from './authContext'
 import authReducer from './authReducer'
 import app from '../base'
+import * as firebase from 'firebase/app'
 
 import {
     SET_SIDE,
@@ -57,6 +58,21 @@ const AuthState = props => {
         }
     }
 
+    const signInGoogleFunc = async () => {
+        const provider =  new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithRedirect(provider)
+        firebase.auth().getRedirectResult().then(function(result) {
+            if (result.credential) {
+                dispatch({
+                    type: SET_CURRENT_USER,
+                    payload: result.user
+                })
+            }
+          }).catch(function(error) {
+            console.log(error)
+          });
+    }
+
     const signOutFunc = async () => {
         try {
             await app.auth().signOut()
@@ -73,7 +89,8 @@ const AuthState = props => {
                 setSideFunc,
                 SingInFunc,
                 signUpFunc,
-                signOutFunc
+                signOutFunc,
+                signInGoogleFunc
             }}
         >
             {props.children}

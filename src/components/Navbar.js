@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import './Navbar.css'
+import styled from 'styled-components'
 import AuthContext from '../context/authContext'
 
 import {Layout} from 'antd'
@@ -30,7 +30,7 @@ const Navbar = ({history}) => {
     
 
     return ( 
-        <Header className='nav'>
+        <StyledHeader>
             {currentUser ?
             <>
                 {React.createElement(side ? MenuUnfoldOutlined : MenuFoldOutlined, {
@@ -41,8 +41,16 @@ const Navbar = ({history}) => {
                 <a onClick={handleClose} href="!#">Cerrar sesion</a>
             </>
             : null}
-        </Header>
+        </StyledHeader>
      );
 }
+
+const StyledHeader = styled(Header)`
+    background: white;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`
  
 export default Navbar;

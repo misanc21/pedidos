@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import {Row, Col, Form, Input, Button} from 'antd'
 import AuthContext from '../context/authContext'
 
+import ButtonGoogle from '../components/ButtonGoogle'
+
 const Register = ({history}) => {
     const { signUpFunc } = useContext(AuthContext)
     const [data, setData] = useState({
@@ -110,6 +112,7 @@ const Register = ({history}) => {
                             Registrar
                         </StyledButton>
                     </StyledFormItem>
+                    <ButtonGoogle />
                 </StyledForm>
             </StyledCol>
         </Row>

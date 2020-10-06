@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import {Row, Col, Form, Input, Button} from 'antd'
 import AuthContext from '../context/authContext'
 
+import ButtonGoogle from '../components/ButtonGoogle'
+
 const Login = ({history}) => {
     const {
         SingInFunc,
@@ -75,6 +77,7 @@ const Login = ({history}) => {
                             Ingresar
                         </StyledButton>
                     </StyledFormItem>
+                    <ButtonGoogle />
                 </StyledForm>
             </StyledCol>
         </Row>

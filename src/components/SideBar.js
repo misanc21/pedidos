@@ -1,9 +1,7 @@
 import React, {useContext} from 'react';
-import './Sidebar.css'
-
+import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import AuthContext from '../context/authContext'
-
 import {Layout, Menu} from 'antd'
 
 import {
@@ -23,7 +21,7 @@ const SideBar = () => {
         <>
         { currentUser &&
         <Sider theme="light" trigger={null} collapsible collapsed={side} collapsedWidth={0} >
-            <div className="logo">{!side && <h4>Pedidos</h4>}</div>
+            <DivLogo> {!side && <h4>Pedidos</h4>} </DivLogo>
             <Menu mode="inline" defaultSelectedKeys={['1']}>
                 <Menu.Item key="1" icon={<UserOutlined />}>
                     <Link to="/">
@@ -36,5 +34,11 @@ const SideBar = () => {
         </>
      );
 }
+
+const DivLogo = styled.div`
+    text-align: center;
+    font-size: 2rem;
+    min-height: 4rem;
+`
  
 export default SideBar;
