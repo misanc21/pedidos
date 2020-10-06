@@ -11,23 +11,36 @@ import {
 const {Header} = Layout
 
 
-
-const Navbar = () => {
-    const authCon = useContext(AuthContext)
+const Navbar = ({history}) => {
     const {
         side,
-        setSideFunc
-    } = authCon
+        setSideFunc,
+        currentUser,
+        signOutFunc
+    } = useContext(AuthContext)
 
     const HandleToggle = () => {
         setSideFunc(!side)
     }
+
+    const handleClose = () => {
+        signOutFunc()
+        if(currentUser) history.push("/login")
+    }
+    
+
     return ( 
         <Header className='nav'>
-            {React.createElement(side ? MenuUnfoldOutlined : MenuFoldOutlined, {
-            className: 'trigger',
-            onClick: ()=>HandleToggle(),
-            })}
+            {currentUser ?
+            <>
+                {React.createElement(side ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                        className: 'trigger',
+                        onClick: ()=>HandleToggle(),
+                        })
+                }
+                <a onClick={handleClose} href="!#">Cerrar sesion</a>
+            </>
+            : null}
         </Header>
      );
 }

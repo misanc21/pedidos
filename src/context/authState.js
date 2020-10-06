@@ -1,16 +1,31 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import AuthContext from './authContext'
 import authReducer from './authReducer'
+import app from '../base'
 
 import {
-    SET_SIDE
+    SET_SIDE,
+    SET_CURRENT_USER
 } from './types'
 
 const AuthState = props => {
     const InitialState = {
-        side : false
+        side : false,
+        currentUser: null
     }
     const [state, dispatch] = useReducer(authReducer, InitialState)
+
+    useEffect(()=>{
+        app.auth().onAuthStateChanged(setCurrentUserFunc)
+    }, [])
+
+    const setCurrentUserFunc = () => {
+        const user = app.auth().currentUser
+        dispatch({
+            type: SET_CURRENT_USER,
+            payload: user
+        })
+    }
 
     const setSideFunc = newSide => {
         dispatch({
@@ -19,11 +34,46 @@ const AuthState = props => {
         })
     }
 
+    const SingInFunc = async (email, password) => {
+        try {
+            await app
+                .auth()
+                .signInWithEmailAndPassword(email, password)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const signUpFunc = async (email, password, displayname) => {
+        try {
+            const newUser = await app
+                .auth()
+                .createUserWithEmailAndPassword(email, password)
+            return await newUser.user.updateProfile({
+                displayName: displayname
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const signOutFunc = async () => {
+        try {
+            await app.auth().signOut()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <AuthContext.Provider
             value={{
                 side : state.side,
-                setSideFunc
+                currentUser: state.currentUser,
+                setSideFunc,
+                SingInFunc,
+                signUpFunc,
+                signOutFunc
             }}
         >
             {props.children}

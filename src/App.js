@@ -14,8 +14,9 @@ import Navbar from './components/Navbar'
 import {
   BrowserRouter as Router,
   Switch,
-  Route
 } from 'react-router-dom'
+import PrivateRoute from './PrivateRoute'
+import PublicRoute from './PublicRoute'
 
 const {Content} = Layout
 
@@ -35,10 +36,10 @@ function App() {
                 }}
             >
               <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/register" component={Register} />
-                <Route path="*" component={NotFound} />
+                <PublicRoute exact path="/login" component={Login} restricted={true} />
+                <PublicRoute exact path="/signUp" component={Register} restricted={true}/>
+                <PrivateRoute exact path="/" component={Home} />
+                <PrivateRoute path="*" component={NotFound} />
               </Switch>
             </Content>
           </Layout>
