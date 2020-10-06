@@ -121,7 +121,7 @@ const tailLayout = {
 
 const buttonLayout = {
     wrapperCol: {
-        offset:1,
+        offset:2,
       span: 21,
     },
 };
